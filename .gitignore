@@ -1,0 +1,18 @@
+# Node / backend
+api/node_modules/
+api/.env
+api/dist/
+api/almacen/fotos/*
+!api/almacen/fotos/.gitkeep
+
+# Flutter
+app/.dart_tool/
+app/.flutter-plugins
+app/.flutter-plugins-dependencies
+app/build/
+app/.packages
+app/pubspec.lock
+
+# Sistema
+.DS_Store
+*.log
