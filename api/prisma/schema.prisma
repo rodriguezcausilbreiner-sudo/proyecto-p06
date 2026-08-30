@@ -1,0 +1,40 @@
+// P6 · Nivel digital de obra
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Visita {
+  id             String     @id @default(uuid()) @db.Uuid
+  tecnico        String
+  mastil         String
+  azimutObjetivo Float      @map("azimut_objetivo")
+  iniciadaEn     DateTime   @default(now()) @map("iniciada_en") @db.Timestamptz
+  cerradaEn      DateTime?  @map("cerrada_en") @db.Timestamptz
+  mediciones     Medicion[]
+
+  @@map("visita")
+}
+
+model Medicion {
+  id              String   @id @default(uuid()) @db.Uuid
+  visitaId        String   @map("visita_id") @db.Uuid
+  visita          Visita   @relation(fields: [visitaId], references: [id])
+  inclinacionX    Float    @map("inclinacion_x")
+  inclinacionY    Float    @map("inclinacion_y")
+  azimut          Float
+  azimutObjetivo  Float    @map("azimut_objetivo")
+  latitud         Float
+  longitud        Float
+  fotoRuta        String   @map("foto_ruta")
+  cumple          Boolean
+  creadaEn        DateTime @default(now()) @map("creada_en") @db.Timestamptz
+
+  @@index([visitaId])
+  @@map("medicion")
+}
